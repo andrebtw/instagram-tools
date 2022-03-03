@@ -1,12 +1,35 @@
 import instaloader
 import os
 import getpass
+from sys import platform
+
+
+if platform == "linux" or platform == "linux2":
+    windows = False
+elif platform == "darwin":
+    windows = False
+elif platform == "win32":
+    windows = True
+
+def clear():
+    if windows:
+        os.system("cls")
+    else:
+        os.system("clear")
+
+def pause():
+    if windows:
+        os.system("pause")
+    else:
+        getpass.getpass(prompt="Press any key to continue . . .")
+        
 
 # Get instance
 L = instaloader.Instaloader()
 
 # Set window title
-os.system("INSTATOOLS")
+if windows:
+    os.system("title INSTATOOLS")
 
 logged = False
 logged_as = ""
@@ -14,9 +37,8 @@ password = ""
 running = True
 
 
-
 while running:
-    os.system("cls")
+    clear()
     print("WELCOME TO INSTATOOLS, PLEASE SELECT WHAT YOU WISH TO DO")
     print("")
     print("")
@@ -36,20 +58,20 @@ while running:
 
     choice = int(input("Enter a number : "))
 
-    os.system("cls")
+    clear()
 
     if choice == 1:
         logged_as = str(input("Enter your username : "))
-        os.system("cls")
+        clear()
         password = getpass.getpass(prompt="Enter your password : ")
-        os.system("cls")
+        clear()
         logged = True
         try:
             L.login(logged_as, password)
         except : 
             print("Either your username or password is incorrect. Please try again.")
             logged = False
-            os.system("pause")
+            pause()
 
     if choice == 2:
         print("Might take some seconds...")
@@ -62,9 +84,9 @@ while running:
         for followee in profile.get_followees():
             following_list.append(followee.username)
         
-        os.system("cls")
+        clear()
         print(", ".join(following_list))
-        os.system("pause")
+        pause()
     
     if choice == 3:
         print("Might take some seconds...")
@@ -77,9 +99,9 @@ while running:
         for follower in profile.get_followers():
             followers_list.append(follower.username)
         
-        os.system("cls")
+        clear()
         print(", ".join(followers_list))
-        os.system("pause")
+        pause()
     
     if choice == 4:
         print("Might take up to a minute but it's worth it ;)")
@@ -107,9 +129,9 @@ while running:
             else:
                 no_follow_back.append(followee.username)
 
-        os.system("cls")
+        clear()
         print(", ".join(no_follow_back))
-        os.system("pause")
+        pause()
     
     if choice == 6:
         quit()
