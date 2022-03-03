@@ -75,14 +75,29 @@ while running:
 
     if choice == 2:
         print("Might take some seconds...")
+        print("")
+        print("")
 
         following_list = []
+
         # Obtain profile metadata
         profile = instaloader.Profile.from_username(L.context, logged_as)
 
+        # Get number of followers
+        following_count = profile.followers
+
+        # Counter
+        counter = 0
+
         # Print list of following
         for followee in profile.get_followees():
+            clear()
             following_list.append(followee.username)
+            counter = counter + 1
+            print("Might take some seconds...")
+            print("")
+            print("")
+            print(f"{counter} / {following_count} following")
         
         clear()
         print(", ".join(following_list))
