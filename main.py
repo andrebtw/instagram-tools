@@ -17,19 +17,30 @@ def clear():
     else:
         os.system("clear")
 
+clear()
+
 def pause():
     if windows:
         os.system("pause")
     else:
         getpass.getpass(prompt="Press any key to continue . . .")
-        
+
+
+if windows:
+    os.system("LOADING...")
+
+
+print("Loading, please wait...")
 
 # Get instance
 L = instaloader.Instaloader()
 
+clear()
+
 # Set window title
 if windows:
     os.system("title INSTATOOLS")
+
 
 logged = False
 logged_as = ""
@@ -51,7 +62,7 @@ while running:
     print("2. Check who are you following")
     print("3. Check who are your followers")
     print("4. Check who doesn't follow you back")
-    print("5. Check someone's account followers or followings")
+    print("5. Check someone's account followers or followings (Coming soon)")
     print("6. Quit the script")
     print("")
     print("")
@@ -83,8 +94,8 @@ while running:
         # Obtain profile metadata
         profile = instaloader.Profile.from_username(L.context, logged_as)
 
-        # Get number of followers
-        following_count = profile.followers
+        # Get number of following
+        following_count = profile.followees
 
         # Counter
         counter = 0
@@ -101,21 +112,38 @@ while running:
         
         clear()
         print(", ".join(following_list))
+        print("")
+        print("")
         pause()
     
     if choice == 3:
         print("Might take some seconds...")
 
         followers_list = []
+
         # Obtain profile metadata
         profile = instaloader.Profile.from_username(L.context, logged_as)
 
+        # Get number of followers
+        followers_count = profile.followers
+
+        # Counter
+        counter = 0
+
         # Print list of followers
         for follower in profile.get_followers():
+            clear()
             followers_list.append(follower.username)
-        
+            counter = counter + 1
+            print("Might take some seconds...")
+            print("")
+            print("")
+            print(f"{counter} / {followers_count} followers")
+
         clear()
         print(", ".join(followers_list))
+        print("")
+        print("")
         pause()
     
     if choice == 4:
@@ -124,20 +152,40 @@ while running:
         no_follow_back = []
         
         followers_list = []
+
         # Obtain profile metadata
         profile = instaloader.Profile.from_username(L.context, logged_as)
 
+        # All profiles count
+        all_count = profile.followers + profile.followees
+        
+        #Counter
+        counter = 0
+
         # Print list of followers
         for follower in profile.get_followers():
+            clear()
+            print("Might take up to a minute but it's worth it ;)")
             followers_list.append(follower.username)
-        
+            counter = counter + 1
+            print("")
+            print("")
+            print(f"{counter} / {all_count} all accounts")
+
         following_list = []
+
         # Obtain profile metadata
         profile = instaloader.Profile.from_username(L.context, logged_as)
 
         # Print list of following
         for followee in profile.get_followees():
             following_list.append(followee.username)
+            clear()
+            print("Might take up to a minute but it's worth it ;)")
+            counter = counter + 1
+            print("")
+            print("")
+            print(f"{counter} / {all_count} all accounts")
 
             if followee.username in followers_list:
                 pass
@@ -146,6 +194,8 @@ while running:
 
         clear()
         print(", ".join(no_follow_back))
+        print("")
+        print("")
         pause()
     
     if choice == 6:
