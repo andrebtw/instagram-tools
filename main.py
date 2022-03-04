@@ -27,7 +27,7 @@ def pause():
 
 
 if windows:
-    os.system("LOADING...")
+    os.system("title LOADING...")
 
 
 print("Loading, please wait...")
